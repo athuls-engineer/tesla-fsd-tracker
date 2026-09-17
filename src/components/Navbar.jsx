@@ -23,8 +23,6 @@ export default function Navbar({
     { name: 'Energy', hasMegaMenu: true },
     { name: 'Charging', hasMegaMenu: true },
     { name: 'Discover', hasMegaMenu: true },
-    { name: 'FSD Supervised', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
-    { name: 'Live Telemetry', action: () => onScrollTo?.('milestone') },
   ];
 
   const handleNavClick = (item) => {
@@ -39,43 +37,27 @@ export default function Navbar({
 
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/90 dark:bg-black/90 border-b border-neutral-200/80 dark:border-neutral-800/80 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        {/* Left: Tesla Logo */}
-        <div className="flex items-center space-x-3 sm:space-x-6 shrink-0">
+        {/* Left: Pure Authentic Tesla Wordmark Logo */}
+        <div className="flex items-center shrink-0">
           <a 
             href="#" 
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="flex items-center space-x-2 group"
+            className="flex items-center py-2 pr-3 group"
+            aria-label="Tesla Telemetry Home"
           >
-            {/* Authentic Official Tesla Vector Wordmark */}
             <svg
-              className="h-3 sm:h-4 w-auto fill-current text-neutral-900 dark:text-white transition-colors duration-200 group-hover:text-tesla-red"
+              className="h-3.5 sm:h-4 w-auto fill-current text-neutral-900 dark:text-white transition-colors duration-200 group-hover:text-tesla-red"
               viewBox="0 0 342 35"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M0 .1a9.7 9.7 0 0 0 7 7h11l.5.1v27.6h6.8V7.3L26 7h11a9.8 9.8 0 0 0 7-7H0zm238.6 0h-6.8v34.8H263a9.7 9.7 0 0 0 6-6.8h-30.3V0zm-52.3 6.8c3.6-1 6.6-3.8 7.4-6.9l-38.1.1v20.6h31.1v7.2h-24.4a13.6 13.6 0 0 0-8.7 7h39.9v-21h-31.2v-7h24zm116.2 28h6.7v-14h24.6v14h6.7v-21h-38zM85.3 7h26a9.6 9.6 0 0 0 7.1-7H78.3a9.6 9.6 0 0 0 7 7zm0 13.8h26a9.6 9.6 0 0 0 7.1-7H78.3a9.6 9.6 0 0 0 7 7zm0 14.1h26a9.6 9.6 0 0 0 7.1-7H78.3a9.6 9.6 0 0 0 7 7zM308.5 7h26a9.6 9.6 0 0 0 7-7h-40a9.6 9.6 0 0 0 7 7z" />
             </svg>
-            <span className="hidden sm:inline-block text-[11px] font-bold tracking-widest text-tesla-red uppercase px-2 py-0.5 rounded bg-red-500/10 border border-red-500/20">
-              FSD TRACKER
-            </span>
           </a>
-
-          {/* Connected Telemetry Indicator (Desktop / Tablet) */}
-          <div className="hidden md:flex items-center space-x-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-900/90 px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="tracking-wider uppercase text-[10px]">Pulse Live</span>
-            <span className="text-neutral-300 dark:text-neutral-700">|</span>
-            <span className="font-mono text-[11px] text-neutral-700 dark:text-neutral-300">
-              ~{Math.round(effectiveRate)} {unit}/s
-            </span>
-          </div>
         </div>
 
         {/* Center Nav Links (Desktop Mega-Menu) */}
@@ -89,16 +71,16 @@ export default function Navbar({
                 onMouseEnter={() => {
                   if (item.hasMegaMenu) setActiveMegaMenu(item.name);
                 }}
-                className={`px-3.5 py-1.5 rounded-md transition-all text-xs tracking-wide uppercase font-semibold flex items-center space-x-1 ${
+                className={`px-3.5 py-1.5 rounded-md transition-all text-xs tracking-wider uppercase font-semibold flex items-center space-x-1 ${
                   isActive
-                    ? 'bg-neutral-200/80 dark:bg-neutral-800 text-tesla-red'
-                    : 'hover:bg-neutral-100 dark:hover:bg-neutral-800/60'
+                    ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white'
+                    : 'text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800/60'
                 }`}
               >
                 <span>{item.name}</span>
                 {item.hasMegaMenu && (
                   <ChevronDown
-                    size={13}
+                    size={12}
                     className={`transition-transform duration-200 ${isActive ? 'rotate-180 text-tesla-red' : 'text-neutral-400'}`}
                   />
                 )}
@@ -108,7 +90,20 @@ export default function Navbar({
         </nav>
 
         {/* Right Controls */}
-        <div className="flex items-center space-x-1.5 sm:space-x-2">
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          
+          {/* Connected Fleet Telemetry Pulse Badge (Desktop) */}
+          <div className="hidden md:flex items-center space-x-2 text-xs font-medium text-neutral-600 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-900/90 px-3 py-1.5 rounded-full border border-neutral-200/80 dark:border-neutral-800">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="tracking-wider uppercase text-[10px] font-semibold text-neutral-500 dark:text-neutral-400">Pulse Live</span>
+            <span className="text-neutral-300 dark:text-neutral-700">|</span>
+            <span className="font-semibold tabular-nums text-xs text-neutral-800 dark:text-neutral-200">
+              ~{Math.round(effectiveRate)} {unit}/s
+            </span>
+          </div>
           
           {/* Unit Toggle: Miles / KM */}
           <div className="flex items-center bg-neutral-100 dark:bg-neutral-900 p-0.5 rounded-lg border border-neutral-200 dark:border-neutral-800 text-xs font-semibold">
