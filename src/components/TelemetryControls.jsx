@@ -62,7 +62,7 @@ export default function TelemetryControls({
 
           {/* Simulation Multipliers */}
           <div className="mt-3 sm:mt-4">
-            <label className="text-[10px] sm:text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">
+            <label className="text-[10px] sm:text-[11px] font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider block mb-1">
               Accumulation Velocity
             </label>
             <div className="grid grid-cols-4 gap-1.5">
@@ -108,7 +108,7 @@ export default function TelemetryControls({
 
           {/* Custom Baseline Input */}
           <form onSubmit={handleManualSubmit} className="mt-3 sm:mt-4 pt-3 border-t border-neutral-200 dark:border-neutral-800">
-            <label className="text-[10px] sm:text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">
+            <label className="text-[10px] sm:text-[11px] font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider block mb-1">
               Custom Start ({unit === 'km' ? 'Kilometers' : 'Miles'})
             </label>
             <div className="flex space-x-2">
@@ -117,7 +117,7 @@ export default function TelemetryControls({
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 placeholder={unit === 'km' ? 'e.g. 25000000000' : 'e.g. 15000000000'}
-                className="flex-1 px-2.5 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs font-mono focus:outline-none focus:border-tesla-red min-w-0"
+                className="flex-1 px-2.5 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs font-mono text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:border-tesla-red min-w-0"
               />
               <button
                 type="submit"

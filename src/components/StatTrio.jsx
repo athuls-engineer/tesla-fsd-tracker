@@ -10,12 +10,12 @@ export default function StatTrio({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 items-start border-t border-neutral-200/80 dark:border-neutral-800/80 pt-6 sm:pt-8">
         
         {/* Column 1: Global Fleet Scale */}
-        <div className="md:pr-8 md:pl-2 flex flex-col justify-start pb-4 md:pb-0 border-b md:border-b-0 border-neutral-100 dark:border-neutral-850">
+        <div className="md:pr-8 md:pl-2 flex flex-col justify-start pb-4 md:pb-0 border-b md:border-b-0 border-neutral-100 dark:border-neutral-800">
           <div className="flex items-baseline">
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold font-tesla tracking-tight text-neutral-900 dark:text-white">
               2M+ <span className="font-semibold text-2xl sm:text-3xl lg:text-4xl">Fleet</span>
             </h2>
-            <span className="text-xs sm:text-sm font-semibold text-neutral-400 dark:text-neutral-500 ml-1 self-start mt-1">
+            <span className="text-xs sm:text-sm font-semibold text-neutral-400 dark:text-neutral-400 ml-1 self-start mt-1">
               ¹
             </span>
           </div>
@@ -27,13 +27,13 @@ export default function StatTrio({
         {/* Column 2: 7x Safer */}
         <div 
           onClick={onOpenSafety}
-          className="md:px-8 md:border-l border-neutral-200 dark:border-neutral-800 flex flex-col justify-start cursor-pointer group pb-4 md:pb-0 border-b md:border-b-0 border-neutral-100 dark:border-neutral-850"
+          className="md:px-8 md:border-l border-neutral-200 dark:border-neutral-800 flex flex-col justify-start cursor-pointer group pb-4 md:pb-0 border-b md:border-b-0 border-neutral-100 dark:border-neutral-800"
         >
           <div className="flex items-baseline">
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold font-tesla tracking-tight text-neutral-900 dark:text-white group-hover:text-tesla-red transition-colors">
               7x <span className="font-semibold text-2xl sm:text-3xl lg:text-4xl">Safer</span>
             </h2>
-            <span className="text-xs sm:text-sm font-semibold text-neutral-400 dark:text-neutral-500 ml-1 self-start mt-1">
+            <span className="text-xs sm:text-sm font-semibold text-neutral-400 dark:text-neutral-400 ml-1 self-start mt-1">
               ⁵
             </span>
           </div>
@@ -54,7 +54,7 @@ export default function StatTrio({
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold font-tesla tracking-tight text-neutral-900 dark:text-white group-hover:text-tesla-red transition-colors">
               12 <span className="font-semibold text-2xl sm:text-3xl lg:text-4xl">Countries</span>
             </h2>
-            <span className="text-xs sm:text-sm font-semibold text-neutral-400 dark:text-neutral-500 ml-1 self-start mt-1">
+            <span className="text-xs sm:text-sm font-semibold text-neutral-400 dark:text-neutral-400 ml-1 self-start mt-1">
               ¹
             </span>
           </div>

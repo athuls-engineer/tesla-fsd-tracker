@@ -260,7 +260,7 @@ export default function MilestoneProgress({
             </div>
           </div>
 
-          <div className="flex justify-between mt-1.5 sm:mt-2 text-[10px] sm:text-[11px] text-neutral-400 dark:text-neutral-500 font-medium">
+          <div className="flex justify-between mt-1.5 sm:mt-2 text-[10px] sm:text-[11px] text-neutral-400 dark:text-neutral-400 font-medium">
             <span>
               Previous: {prevMilestoneTarget > 0 ? (unit === 'km' ? (prevMilestoneTarget * 1.609344 / 1e9).toFixed(1) + 'B km' : (prevMilestoneTarget / 1e9).toFixed(0) + 'B mi') : '0'}
             </span>
@@ -272,7 +272,7 @@ export default function MilestoneProgress({
 
         {/* Countdown Grid (Live ETA) */}
         <div className="mt-6 sm:mt-8 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
-          <div className="p-3 sm:p-4 rounded-xl bg-white dark:bg-black/40 border border-neutral-200 dark:border-neutral-800/80 text-center shadow-xs">
+          <div className="p-3 sm:p-4 rounded-xl bg-white dark:bg-neutral-900/90 border border-neutral-200 dark:border-neutral-800 text-center shadow-xs">
             <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-tesla text-neutral-900 dark:text-white tabular-nums">
               {countdown.days}
             </span>
@@ -281,7 +281,7 @@ export default function MilestoneProgress({
             </p>
           </div>
 
-          <div className="p-3 sm:p-4 rounded-xl bg-white dark:bg-black/40 border border-neutral-200 dark:border-neutral-800/80 text-center shadow-xs">
+          <div className="p-3 sm:p-4 rounded-xl bg-white dark:bg-neutral-900/90 border border-neutral-200 dark:border-neutral-800 text-center shadow-xs">
             <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-tesla text-neutral-900 dark:text-white tabular-nums">
               {String(countdown.hours).padStart(2, '0')}
             </span>
@@ -290,7 +290,7 @@ export default function MilestoneProgress({
             </p>
           </div>
 
-          <div className="p-3 sm:p-4 rounded-xl bg-white dark:bg-black/40 border border-neutral-200 dark:border-neutral-800/80 text-center shadow-xs">
+          <div className="p-3 sm:p-4 rounded-xl bg-white dark:bg-neutral-900/90 border border-neutral-200 dark:border-neutral-800 text-center shadow-xs">
             <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-tesla text-neutral-900 dark:text-white tabular-nums">
               {String(countdown.minutes).padStart(2, '0')}
             </span>
@@ -299,7 +299,7 @@ export default function MilestoneProgress({
             </p>
           </div>
 
-          <div className="p-3 sm:p-4 rounded-xl bg-white dark:bg-black/40 border border-neutral-200 dark:border-neutral-800/80 text-center shadow-xs">
+          <div className="p-3 sm:p-4 rounded-xl bg-white dark:bg-neutral-900/90 border border-neutral-200 dark:border-neutral-800 text-center shadow-xs">
             <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-tesla text-tesla-red tabular-nums">
               {String(countdown.seconds).padStart(2, '0')}
             </span>

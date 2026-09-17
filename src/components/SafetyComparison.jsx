@@ -82,7 +82,7 @@ export default function SafetyComparison({ unit = 'miles' }) {
                 <span className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-neutral-400 shrink-0"></span>
                 <span>US National Average (NHTSA / FHWA Data)</span>
               </span>
-              <span className="text-xs sm:text-sm font-mono font-bold text-neutral-500">
+              <span className="text-xs sm:text-sm font-mono font-bold text-neutral-600 dark:text-neutral-400">
                 1 crash per {formatNumber(nationalAvgDistance)} {unitLabel}
               </span>
             </div>

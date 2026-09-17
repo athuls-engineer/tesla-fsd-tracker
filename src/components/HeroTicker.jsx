@@ -34,7 +34,7 @@ export default function HeroTicker({
           Supervised Fleet Autonomy Telemetry
         </span>
         <span className="text-neutral-300 dark:text-neutral-700">•</span>
-        <span className="text-[11px] font-semibold text-tesla-red tracking-wide truncate">
+        <span className="text-[11px] font-semibold text-tesla-red dark:text-red-400 tracking-wide truncate">
           V12 / V13 Neural Nets
         </span>
       </div>
@@ -56,7 +56,7 @@ export default function HeroTicker({
             <span className="text-tesla-red dark:text-red-500 inline-block transition-transform duration-75">
               {rapidPart}
             </span>
-            <sup className="text-[0.3em] font-bold ml-1 text-neutral-400 dark:text-neutral-500 relative -top-[0.55em] select-none">
+            <sup className="text-[0.3em] font-bold ml-1 text-neutral-400 dark:text-neutral-400 relative -top-[0.55em] select-none">
               1
             </sup>
           </span>
@@ -94,13 +94,13 @@ export default function HeroTicker({
       <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4">
         <a
           href="#milestone"
-          className="w-full sm:w-auto min-w-[210px] px-7 py-3 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 text-xs font-bold tracking-wider uppercase hover:opacity-90 active:scale-[0.99] transition-all shadow-sm text-center"
+          className="w-full sm:w-auto min-w-[210px] px-7 py-3 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 text-xs font-bold tracking-wider uppercase hover:opacity-90 active:scale-[0.99] transition-all shadow-sm text-center"
         >
           Fleet Milestone Roadmap
         </a>
         <a
           href="#safety"
-          className="w-full sm:w-auto min-w-[210px] px-7 py-3 rounded-full bg-neutral-100 dark:bg-neutral-850 hover:bg-neutral-200/80 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-xs font-bold tracking-wider uppercase border border-neutral-200 dark:border-neutral-700/80 active:scale-[0.99] transition-all text-center"
+          className="w-full sm:w-auto min-w-[210px] px-7 py-3 rounded-full bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-white text-xs font-bold tracking-wider uppercase border border-neutral-300 dark:border-neutral-700 active:scale-[0.99] transition-all text-center shadow-xs"
         >
           Safety Benchmark (7x)
         </a>

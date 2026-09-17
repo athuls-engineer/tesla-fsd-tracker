@@ -101,7 +101,7 @@ export default function CountriesModal({ isOpen, onClose }) {
                   <span>{p.flag}</span>
                   <span>{p.name}</span>
                 </div>
-                <p className="text-[10px] text-neutral-500 mt-1">{p.status}</p>
+                <p className="text-[10px] text-neutral-500 dark:text-neutral-400 mt-1">{p.status}</p>
               </div>
             ))}
           </div>
