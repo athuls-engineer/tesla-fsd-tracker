@@ -18,6 +18,40 @@
   font-feature-settings: 'tnum';
 }
 
+/* Authentic dominating Tesla hero counter */
+.hero-counter-odometer {
+  font-size: clamp(2.4rem, 13vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  display: inline-block;
+}
+
+@media (min-width: 640px) {
+  .hero-counter-odometer {
+    font-size: 4.5rem !important;
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-counter-odometer {
+    font-size: 6rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-counter-odometer {
+    font-size: 7.5rem !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-counter-odometer {
+    font-size: 8.5rem !important;
+  }
+}
+
 /* Subtle glow effects */
 .glow-tesla {
   text-shadow: 0 0 20px rgba(232, 33, 39, 0.4), 0 0 40px rgba(232, 33, 39, 0.2);

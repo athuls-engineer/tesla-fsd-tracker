@@ -62,7 +62,7 @@ export default function HeroTicker({
         <div className="absolute -inset-4 rounded-3xl bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-500/10 via-transparent to-transparent blur-2xl opacity-60 dark:opacity-80 pointer-events-none" />
 
         <div className="relative font-tesla font-extrabold tracking-tight tabular-nums select-none flex items-baseline justify-center text-neutral-900 dark:text-white px-1">
-          <span className="text-[clamp(2.4rem,11.5vw,4.5rem)] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] leading-none transition-all duration-75 whitespace-nowrap">
+          <span className="hero-counter-odometer leading-none transition-all duration-75 whitespace-nowrap">
             {stablePart}
             <span className="text-tesla-red dark:text-red-500 inline-block transition-transform duration-75">
               {rapidPart}
