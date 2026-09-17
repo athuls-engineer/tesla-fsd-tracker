@@ -1,24 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { formatDistance, formatNumber } from '../utils/formatters';
-import { ShieldCheck, Zap, Globe, TrendingUp, Sparkles } from 'lucide-react';
+import { Zap, TrendingUp, Sparkles } from 'lucide-react';
 
 export default function HeroTicker({
   miles,
   unit,
   effectiveRate,
-  sessionMiles,
-  playTick
+  sessionMiles
 }) {
-  const prevMilesRef = useRef(miles);
-
-  // Play audio tick whenever miles integer ticks significantly
-  useEffect(() => {
-    if (Math.floor(miles) !== Math.floor(prevMilesRef.current)) {
-      playTick?.();
-      prevMilesRef.current = miles;
-    }
-  }, [miles, playTick]);
-
   // Formatted string representation
   const formattedDistance = formatDistance(miles, unit, 0);
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Sun, Moon, Maximize2, Minimize2, ChevronDown, Menu, X } from 'lucide-react';
+import { Sun, Moon, Maximize2, Minimize2, ChevronDown, Menu, X } from 'lucide-react';
 import MegaMenu from './MegaMenu';
 
 export default function Navbar({
@@ -7,8 +7,6 @@ export default function Navbar({
   onToggleUnit,
   isDark,
   onToggleTheme,
-  soundEnabled,
-  onToggleSound,
   isFullscreen,
   onToggleFullscreen,
   effectiveRate,
@@ -129,19 +127,6 @@ export default function Navbar({
             </button>
           </div>
 
-          {/* Sound Toggle (Hidden on small mobile to avoid navbar squishing) */}
-          <button
-            onClick={onToggleSound}
-            title={soundEnabled ? 'Disable Odometer Ticks' : 'Enable Subtle Odometer Ticks'}
-            className={`hidden sm:inline-flex p-2 rounded-lg border transition-colors ${
-              soundEnabled
-                ? 'bg-red-500/10 border-red-500/30 text-tesla-red'
-                : 'border-neutral-200 dark:border-neutral-800 text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900'
-            }`}
-          >
-            {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
-          </button>
-
           {/* Theme Switcher */}
           <button
             onClick={onToggleTheme}
@@ -193,19 +178,6 @@ export default function Navbar({
               {item.hasMegaMenu && <ChevronDown size={14} className="text-neutral-400" />}
             </button>
           ))}
-
-          {/* Mobile Sound Toggle in Drawer */}
-          <div className="pt-3 mt-2 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between px-4 text-xs font-semibold">
-            <span className="text-neutral-600 dark:text-neutral-400">Odometer Audio Ticks</span>
-            <button
-              onClick={onToggleSound}
-              className={`p-1.5 rounded-md border ${
-                soundEnabled ? 'text-tesla-red border-red-500/30 bg-red-500/10' : 'text-neutral-500 border-neutral-300 dark:border-neutral-700'
-              }`}
-            >
-              {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
-            </button>
-          </div>
         </div>
       )}
     </header>

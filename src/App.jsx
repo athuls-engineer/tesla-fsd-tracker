@@ -9,7 +9,6 @@ import CountriesModal from './components/CountriesModal';
 import TelemetryControls from './components/TelemetryControls';
 import Footnotes from './components/Footnotes';
 import { useFsdCounter } from './hooks/useFsdCounter';
-import { useAudioClick } from './hooks/useAudioClick';
 
 export default function App() {
   // Start with Light Mode to match the user's uploaded screenshot, with option to toggle to dark
@@ -20,9 +19,6 @@ export default function App() {
   const [showAmbient, setShowAmbient] = useState(false);
   const [showCountriesModal, setShowCountriesModal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-
-  // Sound generator
-  const { isEnabled: soundEnabled, toggleSound, playTick } = useAudioClick();
 
   // Primary telemetry hook starting at the exact number from the user's screenshot: 14,586,254,064
   const {
@@ -87,8 +83,6 @@ export default function App() {
           onToggleUnit={setUnit}
           isDark={isDark}
           onToggleTheme={() => setIsDark(!isDark)}
-          soundEnabled={soundEnabled}
-          onToggleSound={toggleSound}
           isFullscreen={isFullscreen}
           onToggleFullscreen={toggleFullscreen}
           effectiveRate={effectiveRate}
@@ -106,7 +100,6 @@ export default function App() {
           unit={unit}
           effectiveRate={effectiveRate}
           sessionMiles={sessionMiles}
-          playTick={playTick}
         />
 
         {/* 3-Column Statistics Bar from User Screenshot */}
