@@ -34,11 +34,13 @@ export function useFsdCounter({
       const deltaMs = now - lastTimeRef.current;
       lastTimeRef.current = now;
 
-      if (!isPaused && deltaMs > 0 && deltaMs < 1000) {
+      if (!isPaused && deltaMs > 0) {
+        // Cap max catch-up per frame to 5 seconds to handle backgrounded tabs gracefully without crazy jumps
+        const clampedDelta = Math.min(deltaMs, 5000);
         // Organic micro-variation in fleet velocity (+/- 4%)
         const jitter = 1 + (Math.sin(now / 800) * 0.04);
         const effectiveRate = rate * multiplier * jitter;
-        const addedMiles = (effectiveRate * deltaMs) / 1000;
+        const addedMiles = (effectiveRate * clampedDelta) / 1000;
 
         milesRef.current += addedMiles;
         sessionMilesRef.current += addedMiles;
@@ -60,6 +62,7 @@ export function useFsdCounter({
   }, [rate, multiplier, isPaused]);
 
   const resetToBaseline = () => {
+    lastTimeRef.current = performance.now();
     milesRef.current = initialBase;
     sessionMilesRef.current = 0;
     setMiles(initialBase);
@@ -69,6 +72,7 @@ export function useFsdCounter({
   const setManualMiles = (val) => {
     const num = Number(val);
     if (!isNaN(num) && num > 0) {
+      lastTimeRef.current = performance.now();
       milesRef.current = num;
       setMiles(num);
     }

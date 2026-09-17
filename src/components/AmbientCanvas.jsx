@@ -25,16 +25,6 @@ export default function AmbientCanvas({ isDark = false, isEnabled = true }) {
 
     window.addEventListener('resize', handleResize);
 
-    // Particle / road segment state
-    const lines = [];
-    const numLines = 14;
-    for (let i = 0; i < numLines; i++) {
-      lines.push({
-        z: (i / numLines) * 1000,
-        speed: 4.5
-      });
-    }
-
     let offset = 0;
 
     const render = () => {
@@ -45,8 +35,6 @@ export default function AmbientCanvas({ isDark = false, isEnabled = true }) {
 
       // Color scheme based on dark/light mode
       const strokeColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.035)';
-      const accentColor = isDark ? 'rgba(52, 199, 89, 0.12)' : 'rgba(52, 199, 89, 0.10)';
-      const trajectoryColor = isDark ? 'rgba(59, 130, 246, 0.15)' : 'rgba(59, 130, 246, 0.12)';
 
       offset = (offset + 2.5) % 80;
 

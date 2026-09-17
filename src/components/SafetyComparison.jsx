@@ -51,8 +51,15 @@ export default function SafetyComparison({ unit = 'miles' }) {
               </span>
             </div>
             <div className="h-4 sm:h-5 w-full bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden p-0.5">
-              <div className="h-full bg-emerald-500 rounded-md transition-all duration-700 w-full relative">
-                <span className="absolute right-2 top-0.2 sm:top-0.5 text-[9px] sm:text-[10px] font-bold text-white uppercase tracking-wider">
+              <div 
+                role="progressbar"
+                aria-valuenow={100}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Tesla FSD Supervised relative safety level: 100%"
+                className="h-full bg-emerald-500 rounded-md transition-all duration-700 w-full relative"
+              >
+                <span className="absolute inset-y-0 right-2 my-auto flex items-center text-[9px] sm:text-[10px] font-bold text-white uppercase tracking-wider">
                   7.4x Safer
                 </span>
               </div>
@@ -71,7 +78,14 @@ export default function SafetyComparison({ unit = 'miles' }) {
               </span>
             </div>
             <div className="h-3.5 sm:h-4 w-full bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden p-0.5">
-              <div className="h-full bg-blue-500 rounded-md transition-all duration-700 w-[30.4%]" />
+              <div 
+                role="progressbar"
+                aria-valuenow={30.4}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Tesla Vehicles without FSD relative safety level: 30.4%"
+                className="h-full bg-blue-500 rounded-md transition-all duration-700 w-[30.4%]" 
+              />
             </div>
           </div>
 
@@ -87,7 +101,14 @@ export default function SafetyComparison({ unit = 'miles' }) {
               </span>
             </div>
             <div className="h-3.5 sm:h-4 w-full bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden p-0.5">
-              <div className="h-full bg-neutral-400 dark:bg-neutral-600 rounded-md transition-all duration-700 w-[13.5%]" />
+              <div 
+                role="progressbar"
+                aria-valuenow={13.5}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="US National Average relative safety level: 13.5%"
+                className="h-full bg-neutral-400 dark:bg-neutral-600 rounded-md transition-all duration-700 w-[13.5%]" 
+              />
             </div>
           </div>
 

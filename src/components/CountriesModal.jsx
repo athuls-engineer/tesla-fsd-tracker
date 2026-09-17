@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, Globe, MapPin, CheckCircle2, Clock, ShieldCheck } from 'lucide-react';
 
 // Verified 12 official countries & territories referenced in Tesla's FSD Supervised availability
@@ -24,17 +24,44 @@ const UPCOMING_PIPELINE = [
 ];
 
 export default function CountriesModal({ isOpen, onClose }) {
+  // Close on Escape key and lock body scroll when open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-fadeIn">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs animate-fadeIn cursor-pointer"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="countries-modal-title"
+    >
       <div 
-        className="relative w-full max-w-2xl bg-white dark:bg-[#111111] border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl p-6 sm:p-8 max-h-[88vh] overflow-y-auto"
+        className="relative w-full max-w-2xl bg-white dark:bg-[#111111] border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl p-6 sm:p-8 max-h-[88vh] overflow-y-auto cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
+          aria-label="Close modal"
           className="absolute top-5 right-5 p-2 rounded-lg text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
         >
           <X size={20} />
@@ -46,7 +73,7 @@ export default function CountriesModal({ isOpen, onClose }) {
             <Globe size={22} />
           </div>
           <div>
-            <h3 className="text-xl font-bold font-tesla text-neutral-900 dark:text-white">
+            <h3 id="countries-modal-title" className="text-xl font-bold font-tesla text-neutral-900 dark:text-white">
               12 Countries And Counting¹
             </h3>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">

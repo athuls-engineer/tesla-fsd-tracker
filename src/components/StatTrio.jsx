@@ -26,8 +26,17 @@ export default function StatTrio({
 
         {/* Column 2: 7x Safer */}
         <div 
+          role="button"
+          tabIndex={0}
+          aria-label="View 7x Safer NHTSA Safety Benchmark"
           onClick={onOpenSafety}
-          className="md:px-8 md:border-l border-neutral-200 dark:border-neutral-800 flex flex-col justify-start cursor-pointer group pb-4 md:pb-0 border-b md:border-b-0 border-neutral-100 dark:border-neutral-800"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onOpenSafety();
+            }
+          }}
+          className="md:px-8 md:border-l border-neutral-200 dark:border-neutral-800 flex flex-col justify-start cursor-pointer group pb-4 md:pb-0 border-b md:border-b-0 border-neutral-100 dark:border-neutral-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-tesla-red/50 rounded-lg transition-all"
         >
           <div className="flex items-baseline">
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold font-tesla tracking-tight text-neutral-900 dark:text-white group-hover:text-tesla-red transition-colors">
@@ -47,8 +56,17 @@ export default function StatTrio({
 
         {/* Column 3: 12 Countries */}
         <div 
+          role="button"
+          tabIndex={0}
+          aria-label="Explore Global 12 Countries Rollout"
           onClick={onOpenCountries}
-          className="md:pl-8 md:border-l border-neutral-200 dark:border-neutral-800 flex flex-col justify-start cursor-pointer group"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onOpenCountries();
+            }
+          }}
+          className="md:pl-8 md:border-l border-neutral-200 dark:border-neutral-800 flex flex-col justify-start cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-tesla-red/50 rounded-lg transition-all"
         >
           <div className="flex items-baseline">
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold font-tesla tracking-tight text-neutral-900 dark:text-white group-hover:text-tesla-red transition-colors">

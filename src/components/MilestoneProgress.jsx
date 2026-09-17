@@ -173,11 +173,16 @@ export default function MilestoneProgress({
             </div>
             <div className="flex flex-wrap items-baseline gap-1.5 sm:gap-2 mt-2">
               <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-tesla text-neutral-900 dark:text-white">
-                Next Target: {activeLabel}
+                {miles >= targetDistanceMiles ? `Achieved Milestone: ${activeLabel}` : `Next Target: ${activeLabel}`}
               </h3>
               <span className="text-[11px] sm:text-xs font-mono text-neutral-500 dark:text-neutral-400">
                 ({formatDistance(targetDistanceMiles, unit, 0)} {unit})
               </span>
+              {miles >= targetDistanceMiles && (
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                  Completed {activeMilestone.year}
+                </span>
+              )}
             </div>
             <p className="text-[11px] sm:text-xs text-neutral-500 dark:text-neutral-400 mt-1">
               {activeMilestone.subtitle}
@@ -214,6 +219,7 @@ export default function MilestoneProgress({
               <button
                 key={m.targetMiles}
                 onClick={() => setSelectedTargetIndex(idx)}
+                aria-label={`Select milestone ${m.labelMiles}`}
                 className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center space-x-1.5 border shrink-0 ${
                   isSelected
                     ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 border-neutral-900 dark:border-white shadow-xs'
@@ -243,15 +249,29 @@ export default function MilestoneProgress({
             <span className="text-neutral-600 dark:text-neutral-300 truncate mr-2">
               Progress: <span className="text-neutral-900 dark:text-white font-mono">{progressPercent.toFixed(3)}%</span>
             </span>
-            <span className="text-neutral-600 dark:text-neutral-300 shrink-0">
-              Remaining: <span className="text-neutral-900 dark:text-white font-mono">
-                {formatDistance(remainingMiles, unit, 0)} {unit}
+            {miles >= targetDistanceMiles ? (
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center space-x-1 shrink-0">
+                <CheckCircle2 size={13} className="shrink-0" />
+                <span>Achieved in {activeMilestone.year}</span>
               </span>
-            </span>
+            ) : (
+              <span className="text-neutral-600 dark:text-neutral-300 shrink-0">
+                Remaining: <span className="text-neutral-900 dark:text-white font-mono">
+                  {formatDistance(remainingMiles, unit, 0)} {unit}
+                </span>
+              </span>
+            )}
           </div>
 
           {/* Bar track */}
-          <div className="h-4 sm:h-5 w-full bg-neutral-200/80 dark:bg-neutral-800 rounded-full overflow-hidden p-0.5 border border-neutral-300/60 dark:border-neutral-700/60 shadow-inner">
+          <div 
+            role="progressbar"
+            aria-valuenow={Math.round(progressPercent)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Progress to ${activeLabel}`}
+            className="h-4 sm:h-5 w-full bg-neutral-200/80 dark:bg-neutral-800 rounded-full overflow-hidden p-0.5 border border-neutral-300/60 dark:border-neutral-700/60 shadow-inner"
+          >
             <div
               className="h-full bg-gradient-to-r from-red-700 via-[#e82127] to-red-400 rounded-full transition-all duration-300 relative shadow-md shadow-red-500/30"
               style={{ width: `${progressPercent}%` }}

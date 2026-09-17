@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, Zap, Shield, Car, BatteryCharging, Sun, Compass } from 'lucide-react';
 
-const MENU_DATA = {
+export const MENU_DATA = {
   Vehicles: {
     title: 'Vehicles',
     items: [

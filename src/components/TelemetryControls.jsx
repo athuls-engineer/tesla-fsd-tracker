@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Play, Pause, RotateCcw, Sliders, Eye, EyeOff, FastForward } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Play, Pause, RotateCcw, Sliders, Eye, EyeOff, FastForward, Activity } from 'lucide-react';
 
 export default function TelemetryControls({
   isPaused,
@@ -15,6 +15,31 @@ export default function TelemetryControls({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [inputVal, setInputVal] = useState('');
+  const drawerRef = useRef(null);
+
+  // Close when clicking outside drawer or pressing Escape
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (e) => {
+      if (drawerRef.current && !drawerRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
 
   const handleManualSubmit = (e) => {
     e.preventDefault();
@@ -27,11 +52,13 @@ export default function TelemetryControls({
   };
 
   return (
-    <div className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-40">
+    <div ref={drawerRef} className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-40">
       
       {/* Floating Pill Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle Telemetry Simulation Controls"
+        aria-expanded={isOpen}
         className="flex items-center space-x-1.5 sm:space-x-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-xl hover:opacity-95 transition-all text-[11px] sm:text-xs font-semibold tracking-wide border border-neutral-700/30"
       >
         <Sliders size={13} className="shrink-0" />
@@ -54,6 +81,7 @@ export default function TelemetryControls({
             </h4>
             <button
               onClick={() => setIsOpen(false)}
+              aria-label="Close simulation controls"
               className="text-xs text-neutral-400 hover:text-neutral-700 dark:hover:text-white p-1"
             >
               ✕
@@ -103,6 +131,25 @@ export default function TelemetryControls({
             >
               <RotateCcw size={13} />
               <span>Reset</span>
+            </button>
+          </div>
+
+          {/* Perception Lane Visualizer Switch */}
+          <div className="mt-3 sm:mt-4 pt-3 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between text-xs">
+            <span className="font-semibold text-neutral-700 dark:text-neutral-300 flex items-center space-x-1.5">
+              <Activity size={14} className="text-tesla-red shrink-0" />
+              <span>Perception Lane Visualizer</span>
+            </span>
+            <button
+              onClick={onToggleAmbient}
+              className={`px-2.5 py-1 rounded-full text-[11px] font-semibold flex items-center space-x-1 transition-colors ${
+                showAmbient
+                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                  : 'bg-neutral-150 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700'
+              }`}
+            >
+              {showAmbient ? <Eye size={12} /> : <EyeOff size={12} />}
+              <span>{showAmbient ? 'Active' : 'Muted'}</span>
             </button>
           </div>
 

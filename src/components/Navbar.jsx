@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Sun, Moon, Maximize2, Minimize2, ChevronDown, Menu, X } from 'lucide-react';
-import MegaMenu from './MegaMenu';
+import { Sun, Moon, Maximize2, Minimize2, ChevronDown, Menu, X, ArrowUpRight, Milestone, Shield, Globe } from 'lucide-react';
+import MegaMenu, { MENU_DATA } from './MegaMenu';
 
 export default function Navbar({
   unit,
@@ -15,6 +15,7 @@ export default function Navbar({
 }) {
   const [activeMegaMenu, setActiveMegaMenu] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState(null);
 
   const navItems = [
     { name: 'Vehicles', hasMegaMenu: true },
@@ -26,10 +27,24 @@ export default function Navbar({
   const handleNavClick = (item) => {
     if (item.action) {
       setActiveMegaMenu(null);
-      setIsMobileMenuOpen(false);
       item.action();
     } else if (item.hasMegaMenu) {
       setActiveMegaMenu(activeMegaMenu === item.name ? null : item.name);
+    }
+  };
+
+  const toggleMobileCategory = (catName) => {
+    setMobileExpanded(mobileExpanded === catName ? null : catName);
+  };
+
+  const handleMobileItemClick = (item) => {
+    setIsMobileMenuOpen(false);
+    setMobileExpanded(null);
+
+    if (item.action === 'openCountries') {
+      onOpenCountries?.();
+    } else if (item.url && item.url.startsWith('#')) {
+      onScrollTo?.(item.url.substring(1));
     }
   };
 
@@ -157,27 +172,119 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Tesla Mega Menu Dropdown */}
-      <MegaMenu
-        activeTab={activeMegaMenu}
-        onClose={() => setActiveMegaMenu(null)}
-        onOpenCountries={onOpenCountries}
-        onScrollTo={onScrollTo}
-      />
+      {/* Tesla Mega Menu Dropdown (Desktop Only) */}
+      <div className="hidden lg:block">
+        <MegaMenu
+          activeTab={activeMegaMenu}
+          onClose={() => setActiveMegaMenu(null)}
+          onOpenCountries={onOpenCountries}
+          onScrollTo={onScrollTo}
+        />
+      </div>
 
       {/* Mobile Drawer Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-black/95 backdrop-blur-xl p-4 space-y-2 animate-fadeIn max-h-[75vh] overflow-y-auto">
-          {navItems.map((item) => (
+        <div className="lg:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-black/95 backdrop-blur-xl p-4 space-y-3 animate-fadeIn max-h-[82vh] overflow-y-auto">
+          
+          {/* Mobile Quick Action Chips */}
+          <div className="grid grid-cols-3 gap-2 pb-3 border-b border-neutral-200 dark:border-neutral-800">
             <button
-              key={item.name}
-              onClick={() => handleNavClick(item)}
-              className="w-full text-left px-4 py-2.5 rounded-lg text-xs sm:text-sm font-semibold tracking-wide uppercase text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/80 flex items-center justify-between"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                onScrollTo?.('milestone');
+              }}
+              className="px-2 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[10px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
             >
-              <span>{item.name}</span>
-              {item.hasMegaMenu && <ChevronDown size={14} className="text-neutral-400" />}
+              <Milestone size={14} className="text-tesla-red" />
+              <span>Roadmap</span>
             </button>
-          ))}
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                onScrollTo?.('safety');
+              }}
+              className="px-2 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[10px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
+            >
+              <Shield size={14} className="text-emerald-500" />
+              <span>7x Safety</span>
+            </button>
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                onOpenCountries?.();
+              }}
+              className="px-2 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[10px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
+            >
+              <Globe size={14} className="text-blue-500" />
+              <span>12 Nations</span>
+            </button>
+          </div>
+
+          {/* Accordion List for Products */}
+          <div className="space-y-1.5">
+            {navItems.map((item) => {
+              const isExpanded = mobileExpanded === item.name;
+              const menuData = MENU_DATA[item.name];
+
+              return (
+                <div key={item.name} className="border border-neutral-200/60 dark:border-neutral-800/80 rounded-xl overflow-hidden">
+                  <button
+                    onClick={() => toggleMobileCategory(item.name)}
+                    className="w-full text-left px-4 py-2.5 bg-neutral-50/50 dark:bg-neutral-900/30 text-xs sm:text-sm font-semibold tracking-wide uppercase text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/80 flex items-center justify-between"
+                  >
+                    <span>{item.name}</span>
+                    <ChevronDown
+                      size={14}
+                      className={`text-neutral-400 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-tesla-red' : ''}`}
+                    />
+                  </button>
+
+                  {isExpanded && menuData && (
+                    <div className="p-2 space-y-1 bg-white dark:bg-black/40 border-t border-neutral-100 dark:border-neutral-800 animate-fadeIn">
+                      {menuData.items.map((subItem) => {
+                        const isInternal = subItem.url && subItem.url.startsWith('#');
+                        const isAction = Boolean(subItem.action);
+
+                        return (
+                          <a
+                            key={subItem.name}
+                            href={subItem.url || '#'}
+                            target={!isInternal && !isAction ? '_blank' : undefined}
+                            rel="noreferrer"
+                            onClick={(e) => {
+                              if (isInternal || isAction) {
+                                e.preventDefault();
+                                handleMobileItemClick(subItem);
+                              } else {
+                                setIsMobileMenuOpen(false);
+                              }
+                            }}
+                            className="flex items-center justify-between p-2.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors group"
+                          >
+                            <div>
+                              <div className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-tesla-red transition-colors">
+                                {subItem.name}
+                              </div>
+                              <div className="text-[10px] text-neutral-500 dark:text-neutral-400">
+                                {subItem.tagline}
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-1 shrink-0 ml-2">
+                              <span className="text-[10px] font-mono text-tesla-red">
+                                {subItem.stat}
+                              </span>
+                              <ArrowUpRight size={12} className="text-neutral-400 group-hover:text-tesla-red" />
+                            </div>
+                          </a>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
         </div>
       )}
     </header>
