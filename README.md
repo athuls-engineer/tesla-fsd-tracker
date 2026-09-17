@@ -12,7 +12,7 @@
 
 ### Cumulative Full Self-Driving (Supervised) Fleet Telemetry Tracker
 
-[![Live Demo](https://img.shields.io/badge/Live%20Telemetry%20Tracker-athuls--engineer.github.io%2Ffsd-e82127?style=for-the-badge&logo=tesla&logoColor=white)](https://athuls-engineer.github.io/fsd/)
+[![Live Demo](https://img.shields.io/badge/Live%20Telemetry%20Tracker-tesla--fsd--live.vercel.app-e82127?style=for-the-badge&logo=tesla&logoColor=white)](https://tesla-fsd-live.vercel.app/)
 
 <br />
 
@@ -30,7 +30,7 @@
 
 ## 🌐 Live Application
 
-* **Public Web Link**: **[https://athuls-engineer.github.io/fsd/](https://athuls-engineer.github.io/fsd/)**
+* **Production Web Link**: **[https://tesla-fsd-live.vercel.app/](https://tesla-fsd-live.vercel.app/)**
 * **Local Development**: `http://localhost:5183/`
 
 ---
