@@ -6,7 +6,8 @@ export default function HeroTicker({
   miles,
   unit,
   effectiveRate,
-  sessionMiles
+  sessionMiles,
+  syncStatus
 }) {
   // Formatted string representation
   const formattedDistance = formatDistance(miles, unit, 0);
@@ -37,6 +38,15 @@ export default function HeroTicker({
         <span className="text-[11px] font-semibold text-tesla-red dark:text-red-400 tracking-wide truncate">
           V12 / V13 Neural Nets
         </span>
+        {syncStatus === 'synced' && (
+          <>
+            <span className="text-neutral-300 dark:text-neutral-700">•</span>
+            <span className="text-[10px] font-mono text-emerald-500 font-semibold truncate flex items-center">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse inline-block mr-1" />
+              <span>Edge Synced</span>
+            </span>
+          </>
+        )}
       </div>
 
       {/* Main Headline Label */}
@@ -91,18 +101,24 @@ export default function HeroTicker({
       </div>
 
       {/* Minimal Tesla CTA Buttons */}
-      <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4">
+      <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3.5 w-full sm:w-auto px-4">
         <a
           href="#milestone"
-          className="w-full sm:w-auto min-w-[210px] px-7 py-3 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 text-xs font-bold tracking-wider uppercase hover:opacity-90 active:scale-[0.99] transition-all shadow-sm text-center"
+          className="w-full sm:w-auto min-w-[180px] px-6 py-3 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 text-xs font-bold tracking-wider uppercase hover:opacity-90 active:scale-[0.99] transition-all shadow-sm text-center"
         >
-          Fleet Milestone Roadmap
+          Milestone Roadmap
+        </a>
+        <a
+          href="#acceleration"
+          className="w-full sm:w-auto min-w-[180px] px-6 py-3 rounded-full bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-white text-xs font-bold tracking-wider uppercase border border-neutral-300 dark:border-neutral-700 active:scale-[0.99] transition-all text-center shadow-xs"
+        >
+          Growth Curve
         </a>
         <a
           href="#safety"
-          className="w-full sm:w-auto min-w-[210px] px-7 py-3 rounded-full bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-white text-xs font-bold tracking-wider uppercase border border-neutral-300 dark:border-neutral-700 active:scale-[0.99] transition-all text-center shadow-xs"
+          className="w-full sm:w-auto min-w-[180px] px-6 py-3 rounded-full bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-white text-xs font-bold tracking-wider uppercase border border-neutral-300 dark:border-neutral-700 active:scale-[0.99] transition-all text-center shadow-xs"
         >
-          Safety Benchmark (7x)
+          7x Safety Benchmark
         </a>
       </div>
 

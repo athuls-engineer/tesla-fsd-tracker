@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sun, Moon, Maximize2, Minimize2, ChevronDown, Menu, X, ArrowUpRight, Milestone, Shield, Globe } from 'lucide-react';
+import { Sun, Moon, Maximize2, Minimize2, ChevronDown, Menu, X, ArrowUpRight, Milestone, Shield, Globe, Share2, TrendingUp } from 'lucide-react';
 import MegaMenu, { MENU_DATA } from './MegaMenu';
 
 export default function Navbar({
@@ -11,6 +11,7 @@ export default function Navbar({
   onToggleFullscreen,
   effectiveRate,
   onOpenCountries,
+  onOpenShare,
   onScrollTo
 }) {
   const [activeMegaMenu, setActiveMegaMenu] = useState(null);
@@ -142,6 +143,16 @@ export default function Navbar({
             </button>
           </div>
 
+          {/* Share Button */}
+          <button
+            onClick={onOpenShare}
+            title="Share Live Fleet Telemetry"
+            aria-label="Share Telemetry"
+            className="p-1.5 sm:p-2 rounded-lg border border-neutral-200 dark:border-neutral-800 text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
+          >
+            <Share2 size={16} />
+          </button>
+
           {/* Theme Switcher */}
           <button
             onClick={onToggleTheme}
@@ -187,36 +198,46 @@ export default function Navbar({
         <div className="lg:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-black/95 backdrop-blur-xl p-4 space-y-3 animate-fadeIn max-h-[82vh] overflow-y-auto">
           
           {/* Mobile Quick Action Chips */}
-          <div className="grid grid-cols-3 gap-2 pb-3 border-b border-neutral-200 dark:border-neutral-800">
+          <div className="grid grid-cols-4 gap-1.5 pb-3 border-b border-neutral-200 dark:border-neutral-800">
             <button
               onClick={() => {
                 setIsMobileMenuOpen(false);
                 onScrollTo?.('milestone');
               }}
-              className="px-2 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[10px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
+              className="px-1.5 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[9px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
             >
-              <Milestone size={14} className="text-tesla-red" />
+              <Milestone size={13} className="text-tesla-red" />
               <span>Roadmap</span>
+            </button>
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                onScrollTo?.('acceleration');
+              }}
+              className="px-1.5 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[9px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
+            >
+              <TrendingUp size={13} className="text-amber-500" />
+              <span>Curve</span>
             </button>
             <button
               onClick={() => {
                 setIsMobileMenuOpen(false);
                 onScrollTo?.('safety');
               }}
-              className="px-2 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[10px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
+              className="px-1.5 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[9px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
             >
-              <Shield size={14} className="text-emerald-500" />
+              <Shield size={13} className="text-emerald-500" />
               <span>7x Safety</span>
             </button>
             <button
               onClick={() => {
                 setIsMobileMenuOpen(false);
-                onOpenCountries?.();
+                onOpenShare?.();
               }}
-              className="px-2 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[10px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
+              className="px-1.5 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 text-[9px] font-bold uppercase tracking-wider flex flex-col items-center justify-center space-y-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
             >
-              <Globe size={14} className="text-blue-500" />
-              <span>12 Nations</span>
+              <Share2 size={13} className="text-blue-500" />
+              <span>Share</span>
             </button>
           </div>
 

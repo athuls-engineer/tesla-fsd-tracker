@@ -15,11 +15,65 @@ export function useFsdCounter({
   const [miles, setMiles] = useState(initialBase);
   const [sessionMiles, setSessionMiles] = useState(0);
   const [rate, setRate] = useState(defaultRate);
+  const [syncStatus, setSyncStatus] = useState('local'); // 'local' | 'syncing' | 'synced'
+  const [lastSyncedAt, setLastSyncedAt] = useState(null);
   
   const lastTimeRef = useRef(performance.now());
   const milesRef = useRef(initialBase);
   const sessionMilesRef = useRef(0);
   const animFrameIdRef = useRef(null);
+
+  // Sync with live Edge API or static JSON telemetry baseline on mount
+  useEffect(() => {
+    let isMounted = true;
+    setSyncStatus('syncing');
+
+    async function syncBaseline() {
+      try {
+        let res = await fetch('/api/telemetry').catch(() => null);
+        if (!res || !res.ok) {
+          // Fallback to static JSON if edge route is not available (e.g. GitHub Pages)
+          res = await fetch('./telemetry-data.json').catch(() => null);
+        }
+
+        if (res && res.ok) {
+          const data = await res.json();
+          if (!isMounted) return;
+
+          const nowMs = Date.now();
+          const refMs = data.referenceTimestamp ? new Date(data.referenceTimestamp).getTime() : nowMs;
+          const velocity = Number(data.fleetVelocityPerSecond) || defaultRate;
+          const anchor = Number(data.referenceAnchorMiles) || initialBase;
+
+          // Calculate current live miles from reference epoch to current second
+          const elapsedSec = Math.max((nowMs - refMs) / 1000, 0);
+          const calibratedMiles = Math.round(anchor + (elapsedSec * velocity));
+
+          if (calibratedMiles > milesRef.current) {
+            milesRef.current = calibratedMiles;
+            setMiles(calibratedMiles);
+          }
+
+          if (velocity > 0) {
+            setRate(velocity);
+          }
+
+          setSyncStatus('synced');
+          setLastSyncedAt(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+        } else {
+          if (isMounted) setSyncStatus('local');
+        }
+      } catch (err) {
+        if (isMounted) setSyncStatus('local');
+      }
+    }
+
+    syncBaseline();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [initialBase, defaultRate]);
 
   // Sync ref with initialBase if changed externally
   useEffect(() => {
@@ -85,6 +139,8 @@ export function useFsdCounter({
     setRate,
     resetToBaseline,
     setManualMiles,
-    effectiveRate: rate * multiplier
+    effectiveRate: rate * multiplier,
+    syncStatus,
+    lastSyncedAt
   };
 }

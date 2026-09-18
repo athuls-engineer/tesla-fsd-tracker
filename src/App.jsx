@@ -4,8 +4,10 @@ import AmbientCanvas from './components/AmbientCanvas';
 import HeroTicker from './components/HeroTicker';
 import StatTrio from './components/StatTrio';
 import MilestoneProgress from './components/MilestoneProgress';
+import GrowthCurve from './components/GrowthCurve';
 import SafetyComparison from './components/SafetyComparison';
 import CountriesModal from './components/CountriesModal';
+import ShareModal from './components/ShareModal';
 import TelemetryControls from './components/TelemetryControls';
 import Footnotes from './components/Footnotes';
 import { useFsdCounter } from './hooks/useFsdCounter';
@@ -16,8 +18,9 @@ export default function App() {
   const [unit, setUnit] = useState('miles');
   const [multiplier, setMultiplier] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
-  const [showAmbient, setShowAmbient] = useState(false);
+  const [showAmbient, setShowAmbient] = useState(true);
   const [showCountriesModal, setShowCountriesModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Primary telemetry hook starting at the exact number from the user's screenshot: 14,586,254,064
@@ -26,7 +29,9 @@ export default function App() {
     sessionMiles,
     effectiveRate,
     resetToBaseline,
-    setManualMiles
+    setManualMiles,
+    syncStatus,
+    lastSyncedAt
   } = useFsdCounter({
     initialBase: 14586254064,
     multiplier,
@@ -87,6 +92,7 @@ export default function App() {
           onToggleFullscreen={toggleFullscreen}
           effectiveRate={effectiveRate}
           onOpenCountries={() => setShowCountriesModal(true)}
+          onOpenShare={() => setShowShareModal(true)}
           onScrollTo={scrollToSection}
         />
       )}
@@ -100,6 +106,7 @@ export default function App() {
           unit={unit}
           effectiveRate={effectiveRate}
           sessionMiles={sessionMiles}
+          syncStatus={syncStatus}
         />
 
         {/* 3-Column Statistics Bar from User Screenshot */}
@@ -115,6 +122,12 @@ export default function App() {
           miles={miles}
           unit={unit}
           effectiveRate={effectiveRate}
+        />
+
+        {/* Exponential Fleet Acceleration Curve Section */}
+        <GrowthCurve
+          currentLiveMiles={miles}
+          unit={unit}
         />
 
         {/* Safety Comparison Section (7x Safer) */}
@@ -140,6 +153,14 @@ export default function App() {
       <CountriesModal
         isOpen={showCountriesModal}
         onClose={() => setShowCountriesModal(false)}
+      />
+
+      {/* Social Share & Live OpenGraph Card Modal */}
+      <ShareModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        currentMiles={miles}
+        unit={unit}
       />
 
       {/* Authentic Tesla Footnotes */}
