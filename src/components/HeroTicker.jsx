@@ -50,12 +50,12 @@ export default function HeroTicker({
       </div>
 
       {/* Main Headline Label */}
-      <h1 className="text-xs sm:text-sm font-semibold tracking-[0.18em] text-neutral-500 dark:text-neutral-400 uppercase mb-3 px-2">
+      <h1 className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-neutral-500 dark:text-neutral-400 uppercase mb-2 sm:mb-4 px-2">
         Cumulative FSD (Supervised) {unit === 'km' ? 'Kilometers' : 'Miles'} Driven
       </h1>
 
       {/* THE MAIN BIG THING: Responsive Fluid Live-Updating Counter */}
-      <div className="relative my-2 sm:my-4 group w-full max-w-full overflow-visible">
+      <div className="relative my-2 sm:my-5 group w-full max-w-full overflow-visible">
         
         {/* Subtle background ambient back-glow in dark mode */}
         <div className="absolute -inset-4 rounded-3xl bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-500/10 via-transparent to-transparent blur-2xl opacity-60 dark:opacity-80 pointer-events-none" />
@@ -74,7 +74,7 @@ export default function HeroTicker({
       </div>
 
       {/* Real-time Rate Pill and Velocity */}
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-medium w-full max-w-2xl px-2">
+      <div className="mt-5 sm:mt-8 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-medium w-full max-w-2xl px-2">
         <div className="flex items-center space-x-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-neutral-50 dark:bg-neutral-900/90 border border-neutral-200/80 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 text-xs shadow-xs">
           <TrendingUp size={14} className="text-emerald-500 shrink-0" />
           <span className="text-neutral-500 dark:text-neutral-400">Velocity:</span>
