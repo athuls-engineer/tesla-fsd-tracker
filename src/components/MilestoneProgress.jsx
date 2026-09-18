@@ -218,7 +218,12 @@ export default function MilestoneProgress({
             return (
               <button
                 key={m.targetMiles}
-                onClick={() => setSelectedTargetIndex(idx)}
+                onClick={() => {
+                  if (typeof navigator !== 'undefined' && navigator.vibrate) {
+                    try { navigator.vibrate(8); } catch {}
+                  }
+                  setSelectedTargetIndex(idx);
+                }}
                 aria-label={`Select milestone ${m.labelMiles}`}
                 className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all flex items-center space-x-1.5 border shrink-0 ${
                   isSelected

@@ -77,7 +77,8 @@ export default function GrowthCurve({ currentLiveMiles, unit = 'miles' }) {
   const handleMouseMove = (e) => {
     if (!svgRef.current) return;
     const rect = svgRef.current.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const isTouch = Boolean(e.touches && e.touches.length > 0);
+    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
     const relativeX = ((clientX - rect.left) / rect.width) * width;
 
     // Find nearest point
@@ -90,6 +91,17 @@ export default function GrowthCurve({ currentLiveMiles, unit = 'miles' }) {
         nearest = p;
       }
     });
+
+    // Haptic feedback on mobile touch scrubbing when snapping to a historical milestone epoch
+    if (nearest && (!hoveredPoint || hoveredPoint.date !== nearest.date)) {
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        try {
+          navigator.vibrate(8);
+        } catch {
+          // Ignore if unsupported or restricted by browser permissions
+        }
+      }
+    }
 
     setHoveredPoint(nearest);
     setCursorPos({ x: nearest.x, y: nearest.y });
@@ -204,6 +216,7 @@ export default function GrowthCurve({ currentLiveMiles, unit = 'miles' }) {
             viewBox={`0 0 ${width} ${height}`}
             className="w-full h-auto max-h-[440px] cursor-crosshair overflow-visible"
             onMouseMove={handleMouseMove}
+            onTouchStart={handleMouseMove}
             onTouchMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onTouchEnd={handleMouseLeave}

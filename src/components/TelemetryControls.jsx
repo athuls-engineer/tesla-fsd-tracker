@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, RotateCcw, Sliders, Eye, EyeOff, FastForward, Activity } from 'lucide-react';
+import { Play, Pause, RotateCcw, Sliders, Eye, EyeOff, FastForward, Activity, Maximize, Minimize } from 'lucide-react';
 
 export default function TelemetryControls({
   isPaused,
@@ -15,7 +15,24 @@ export default function TelemetryControls({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [inputVal, setInputVal] = useState('');
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const drawerRef = useRef(null);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {});
+    } else {
+      document.exitFullscreen?.().catch(() => {});
+    }
+  };
 
   // Close when clicking outside drawer or pressing Escape
   useEffect(() => {
@@ -150,6 +167,22 @@ export default function TelemetryControls({
             >
               {showAmbient ? <Eye size={12} /> : <EyeOff size={12} />}
               <span>{showAmbient ? 'Active' : 'Muted'}</span>
+            </button>
+          </div>
+
+          {/* In-Car Touchscreen Fullscreen Toggle */}
+          <div className="mt-3 pt-3 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between text-xs">
+            <span className="font-semibold text-neutral-700 dark:text-neutral-300 flex items-center space-x-1.5">
+              <Maximize size={14} className="text-tesla-red shrink-0" />
+              <span>In-Car Fullscreen Mode</span>
+            </span>
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700 flex items-center space-x-1 transition-colors"
+            >
+              {isFullscreen ? <Minimize size={12} /> : <Maximize size={12} />}
+              <span>{isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}</span>
             </button>
           </div>
 
