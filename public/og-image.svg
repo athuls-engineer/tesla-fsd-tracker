@@ -1,32 +1,3 @@
-export const config = {
-  runtime: 'edge',
-};
-
-const REFERENCE_EPOCH_MS = new Date('2026-09-17T15:00:00.000Z').getTime();
-const REFERENCE_ANCHOR_MILES = 14586254064;
-const FLEET_VELOCITY_PER_SEC = 231.4815;
-
-export default async function handler(req) {
-  try {
-    const { searchParams } = new URL(req.url);
-    
-    let milesParam = searchParams.get('miles');
-    let milesNumber;
-
-    if (milesParam) {
-      milesNumber = Number(milesParam);
-    } else {
-      const now = Date.now();
-      const elapsedSec = Math.max((now - REFERENCE_EPOCH_MS) / 1000, 0);
-      milesNumber = Math.round(REFERENCE_ANCHOR_MILES + (elapsedSec * FLEET_VELOCITY_PER_SEC));
-    }
-
-    const unit = searchParams.get('unit') === 'km' ? 'KM' : 'MILES';
-    const displayValue = (unit === 'KM' ? milesNumber * 1.609344 : milesNumber).toLocaleString('en-US', {
-      maximumFractionDigits: 0
-    });
-
-    const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <radialGradient id="redGlow" cx="80%" cy="20%" r="70%">
@@ -63,7 +34,7 @@ export default async function handler(req) {
 
   <!-- Odometer Value -->
   <text x="90" y="345" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="86" font-weight="900" letter-spacing="-2">
-    ${displayValue} <tspan fill="#e82127" font-size="52" font-weight="800">${unit}</tspan>
+    14,586,254,064 <tspan fill="#e82127" font-size="52" font-weight="800">MILES</tspan>
   </text>
 
   <!-- Stats Meta Line -->
@@ -77,20 +48,4 @@ export default async function handler(req) {
   <!-- Footer Info -->
   <text x="90" y="525" fill="#e82127" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" letter-spacing="1">tesla-fsd-live.vercel.app</text>
   <text x="1110" y="525" text-anchor="end" fill="#71717a" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="500">Official Telematics Benchmark  •  Real-Time Odometer</text>
-</svg>`.trim();
-
-    return new Response(svg, {
-      status: 200,
-      headers: {
-        'Content-Type': 'image/svg+xml; charset=utf-8',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=60'
-      }
-    });
-  } catch (e) {
-    return new Response(`Error: ${e.message}`, {
-      status: 500,
-      headers: { 'Content-Type': 'text/plain' }
-    });
-  }
-}
+</svg>
